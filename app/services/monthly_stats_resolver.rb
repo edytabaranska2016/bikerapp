@@ -23,7 +23,7 @@ class MonthlyStatsResolver
       next if trips_number(day) == 0
 
       stats_set = {
-        day:  day.to_formatted_s(:long_ordinal),
+        day:  formatted_day(day),
         total_distance: formatted_total_dostance(day),
         avg_ride: avg_ride(day),
         avg_price: avg_price(day)
@@ -60,5 +60,11 @@ class MonthlyStatsResolver
     "#{calculated_total_distance_per_day(day) / trips_number(day)}km"
   rescue ZeroDivisionError
     '0km'
+  end
+
+  def formatted_day(day)
+    full_date_splitted = day.to_formatted_s(:long_ordinal).split(' ')
+
+    "#{full_date_splitted.first}, #{full_date_splitted[1].chop!}"
   end
 end
