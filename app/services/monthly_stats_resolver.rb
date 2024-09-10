@@ -23,7 +23,7 @@ class MonthlyStatsResolver
       next if trips_number(day) == 0
 
       stats_set = {
-        day: day,
+        day:  day.to_formatted_s(:long_ordinal),
         total_distance: formatted_total_dostance(day),
         avg_ride: avg_ride(day),
         avg_price: avg_price(day)
@@ -36,17 +36,11 @@ class MonthlyStatsResolver
   end
 
   def calculated_total_distance_per_day(day)
-    total_distance = 0
-    per_day_scope(day).each do |trip|
-      geocoded_distance = ::DistanceResolver.new(trip).perform
-      total_distance += geocoded_distance
-    end
-
-    total_distance
+    per_day_scope(day).sum(:distance).round
   end
 
   def formatted_total_dostance(day)
-    "#{calculated_total_distance_per_day(day).round}km"
+    "#{calculated_total_distance_per_day(day)}km"
   end
 
   def trips_number(day)
@@ -54,21 +48,17 @@ class MonthlyStatsResolver
   end
 
   def avg_price(day)
-    total_price = 0
-
-    per_day_scope(day).each do |trip|
-      total_price += trip.price
-    end
+    total_price = per_day_scope(day).sum(:price)
 
     avg_price = total_price / trips_number(day)
     "#{avg_price.round(2)}PLN"
   rescue ZeroDivisionError
-    "0PLN"
+    '0PLN'
   end
 
   def avg_ride(day)
-    "#{calculated_total_distance_per_day(day) / trips_number(day)}PLN"
+    "#{calculated_total_distance_per_day(day) / trips_number(day)}km"
   rescue ZeroDivisionError
-    "0km"
+    '0km'
   end
 end
