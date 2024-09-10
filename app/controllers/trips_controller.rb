@@ -18,7 +18,7 @@ class TripsController < ApplicationController
     @trip = Trip.new(trip_params)
 
     if @trip.save
-      update_distance_from_coordinates
+      update_distance_from_coordinates unless trip_params.include?(:distance)
       render json: @trip, status: :created, location: @trip
     else
       render json: @trip.errors, status: :unprocessable_entity
@@ -46,7 +46,7 @@ class TripsController < ApplicationController
   end
 
   def trip_params
-    params.permit(:start_address, :destination_address, :price, :date)
+    params.permit(:start_address, :destination_address, :price, :date, :distance)
   end
 
   def create_start_address_location
