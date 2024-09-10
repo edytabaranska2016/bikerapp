@@ -40,4 +40,4 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-
+gem "geocoder", "~> 1.8"
