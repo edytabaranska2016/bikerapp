@@ -6,7 +6,7 @@ class DistanceResolver
   def perform
     return 0 if locations_not_founded?
 
-    Geocoder::Calculations.distance_between(start_coordinates(trip), destination_coordinates(trip))
+    Geocoder::Calculations.distance_between(start_coordinates(trip), destination_coordinates(trip)).round(2)
   end
 
   private
