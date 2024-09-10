@@ -21,7 +21,7 @@ class WeeklyStatsResolver
 
   def calculated_total_price
     total_price = current_week_trips_scope.sum(:price)
-    
+
     "#{total_price.round(2)}PLN"
   end
 end

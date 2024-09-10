@@ -19,7 +19,7 @@ class TripsController < ApplicationController
 
     if @trip.save
       update_distance_from_coordinates unless trip_params.include?(:distance)
-      render json: @trip, status: :created, location: @trip
+      render json: @trip
     else
       render json: @trip.errors, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class TripsController < ApplicationController
   end
 
   private
-  
+
   def set_trip
     @trip = Trip.find(params[:id])
   end

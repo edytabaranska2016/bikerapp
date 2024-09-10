@@ -54,17 +54,17 @@ class MonthlyStatsResolver
     avg_price = total_price / trips_number(day)
     "#{avg_price.round(2)}PLN"
   rescue ZeroDivisionError
-    '0PLN'
+    "0PLN"
   end
 
   def avg_ride(day)
     "#{calculated_total_distance_per_day(day) / trips_number(day)}km"
   rescue ZeroDivisionError
-    '0km'
+    "0km"
   end
 
   def formatted_day(day)
-    full_date_splitted = day.to_formatted_s(:long_ordinal).split(' ')
+    full_date_splitted = day.to_formatted_s(:long_ordinal).split(" ")
 
     "#{full_date_splitted.first}, #{full_date_splitted[1].chop!}"
   end
