@@ -9,4 +9,5 @@ class Trip < ApplicationRecord
   validates :price, comparison: { greater_than_or_equal_to: 0, message: "price cannot be negative" }
   validates :date, presence: true
   validates :date, format: { with: /\d{4}\-\d{2}\-\d{2}/ , message: "date should be in format YYYY-MM-DD" }
+  validates :distance, comparison: { greater_than_or_equal_to: 0, message: "distance cannot be negative" }, allow_nil: true
 end
