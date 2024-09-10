@@ -18,6 +18,8 @@ class TripsController < ApplicationController
     @trip = Trip.new(trip_params)
 
     if @trip.save
+      create_start_address_location
+      create_destination_address_location
       render json: @trip, status: :created, location: @trip
     else
       render json: @trip.errors, status: :unprocessable_entity
@@ -39,13 +41,23 @@ class TripsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_trip
-      @trip = Trip.find(params[:id])
-    end
+  
+  def set_trip
+    @trip = Trip.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def trip_params
-      params.require(:trip).permit(:start_address, :destination_address, :price, :date)
-    end
+  # Only allow a list of trusted parameters through.
+  def trip_params
+    params.require(:trip).permit(:start_address, :destination_address, :price, :date)
+  end
+
+  def create_start_address_location
+    start_location = Location.new(address: trip_params[:start_address])
+    start_location.save
+  end
+
+  def create_destination_address_location
+    destination_location = Location.new(address: trip_params[:destination_address])
+    destination_location.save
+  end
 end
