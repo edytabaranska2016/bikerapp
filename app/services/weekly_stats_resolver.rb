@@ -1,8 +1,9 @@
+# service calculating weekly stats for current month
 class WeeklyStatsResolver
   def perform
-    { 
+    {
       total_distance: calculated_total_distance,
-      total_price: calculated_total_price 
+      total_price: calculated_total_price
     }
   end
 
@@ -20,7 +21,7 @@ class WeeklyStatsResolver
 
   def calculated_total_price
     total_price = current_week_trips_scope.sum(:price)
-
+    
     "#{total_price.round(2)}PLN"
   end
 end

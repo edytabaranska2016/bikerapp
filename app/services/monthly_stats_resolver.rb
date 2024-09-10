@@ -1,3 +1,4 @@
+# service calculating monthly stats per day for current month
 class MonthlyStatsResolver
   def perform
     per_day_calculations
@@ -20,10 +21,10 @@ class MonthlyStatsResolver
   def per_day_calculations
     stats_arr = []
     current_month_range.each do |day|
-      next if trips_number(day) == 0
+      next if trips_number(day).zero?
 
       stats_set = {
-        day:  formatted_day(day),
+        day: formatted_day(day),
         total_distance: formatted_total_dostance(day),
         avg_ride: avg_ride(day),
         avg_price: avg_price(day)
